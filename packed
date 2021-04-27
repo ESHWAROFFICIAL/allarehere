@@ -1,0 +1,358 @@
+.pac-input__wrap
+  .pac-input
+    input(data-lpignore="true" type='password' value='chomprulz' autocomplete="off")
+    a.pac-input__pac
+    a.pac-input__ghost
+      .pac-input__ghost-eyes
+    .pac-input__cloak
+    
+    
+    
+    
+    html pug
+    
+    
+    
+   *
+  box-sizing border-box
+
+:root
+  --bg hsl(211, 97%, 12%)
+  --input hsl(0, 0%, 60%)
+  --pac hsl(59, 100%, 50%)
+  --border hsl(231, 92%, 45%)
+  --border--hover hsl(231, 92%, 62%)
+  --border--active hsl(231, 92%, 52%)
+  --ghost--green hsl(181, 100%, 57%)
+  --ghost--pink hsl(332, 98%, 81%)
+  --ghost--orange hsl(48, 100%, 50%)
+  --ghost--red hsl(12, 100%, 47%)
+  --track--dot hsl(0, 0%, 98%)
+  --size 30px
+  --width 300px
+  --height 50px
+  --font 24px
+  --speed .25s
+
+html
+body
+  background var(--bg)
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  width 100vw
+  font-family 'Arial', sans-serif
+  overflow hidden
+
+.pac-input
+  position relative
+  overflow hidden
+  border 6px solid var(--border)
+  border-radius 8px
+  transition border-color 0.1
+  
+  &__wrap
+    border-radius 8px
+    box-shadow 0 20px 20px -20px black
+
+  & > input
+    border 0
+    border-radius 0
+    font-size var(--font)
+    line-height var(--font)
+    padding 6px 45px 6px 12px
+    letter-spacing 1px
+    width var(--width)
+    height var(--height)
+    background var(--input)
+
+    &:focus
+      outline transparent
+
+  &__cloak
+    background-color $var(--input)
+    width 100%
+    height var(--size)
+    position absolute
+    top 50%
+    left 100%
+    transform translate(-24px, -50%)
+
+  &__ghost
+    cursor pointer
+    height var(--size)
+    width 100%
+    position absolute
+    right 105%
+    top 50%
+    width var(--size)
+    border-radius 100% 100% 0 0
+    position absolute
+    z-index 1
+    transform translate(0, -50%)
+    clip-path polygon(15% 100%, 0 85%, 0 0, 100% 0, 100% 85%, 85% 100%, 66% 85%, 50% 100%, 30% 85%)
+    -webkit-clip-path polygon(15% 100%, 0 85%, 0 0, 100% 0, 100% 85%, 85% 100%, 66% 85%, 50% 100%, 30% 85%)
+
+    &-eyes
+      height 6px
+      width 20px
+      position absolute
+      top 8px
+      left 5px
+
+
+      &:before
+      &:after
+        border-radius 100%
+        content ''
+        height 6px
+        width 6px
+        background radial-gradient(circle at 30% 60%, blue 0, blue 25%, white 25%, white 100%)
+        position absolute
+
+      &:after
+        left 8px
+
+  &__pac
+    cursor pointer
+    position absolute
+    top 50%
+    right 10px
+    height var(--size)
+    width var(--size)
+    transform translate(0, -50%)
+    z-index 1
+
+    &--chomping
+      &:before
+        animation-name chomp--1
+      &:after
+        animation-name chomp--2
+
+
+    &:before
+    &:after
+      content ''
+      position absolute
+      left 0
+      border-radius 100%
+      border calc(var(--size) / 2) solid var(--pac)
+      transform-origin center center
+      animation-duration var(--speed)
+      animation-timing-function linear
+      animation-iteration-count infinite
+
+    &:before
+      border-left-color transparent
+      border-bottom-color transparent
+
+    &:after
+      border-top-color transparent
+      border-right-color transparent
+      transform rotate(-90deg)
+
+@keyframes chomp--1
+  0%, 100%
+    transform rotate(0deg)
+  50%
+    transform rotate(-45deg)
+
+@keyframes chomp--2
+  0%, 100%
+    transform rotate(-90deg)
+  50%
+    transform rotate(-45deg)
+    
+    
+  
+  
+  
+  
+  css stylus
+  
+  
+  
+  
+  const {
+  gsap: {
+    timeline,
+    set,
+    utils: { random },
+  },
+} = window
+
+const AUDIO = {
+  CLICK: new Audio('https://assets.codepen.io/605876/click.mp3'),
+  IN: new Audio('https://assets.codepen.io/605876/pac-in.mp3'),
+  OUT: new Audio('https://assets.codepen.io/605876/pac-out.mp3'),
+}
+
+const CONTAINER = document.querySelector('.pac-input')
+const PAC = CONTAINER.querySelector('.pac-input__pac')
+const GHOST = CONTAINER.querySelector('.pac-input__ghost')
+const EYES = GHOST.querySelector('.pac-input__ghost-eyes')
+const INPUT = CONTAINER.querySelector('input')
+const CLOAK = CONTAINER.querySelector('.pac-input__cloak')
+
+const COLORS = {
+  INPUT: 'hsl(0, 0%, 60%)',
+  BG: 'hsl(0, 0%, 0%)',
+  GHOST: ['orange', 'green', 'pink', 'red'],
+}
+const DURATIONS = {
+  ENV: 0.15,
+  CHOMP: 1,
+  GHOST: 1,
+  EYES: 0.5,
+}
+
+const BLINK = () => {
+  const delay = random(2, 6)
+  timeline().to(EYES, {
+    delay,
+    onComplete: () => BLINK(),
+    scaleY: 0.1,
+    repeat: 3,
+    yoyo: true,
+    duration: 0.05,
+  })
+}
+BLINK()
+
+const hidePassword = () => {
+  timeline({
+    onStart: () => AUDIO.CLICK.play(),
+    onComplete: () => {
+      AUDIO.OUT.pause()
+      AUDIO.OUT.currentTime = 0
+    },
+  })
+    .to(GHOST, {
+      duration: DURATIONS.EYES,
+      right: '105%',
+      ease: 'none',
+      onStart: () => {
+        AUDIO.OUT.play()
+        set(GHOST, { backgroundColor: COLORS.INPUT })
+      },
+    })
+    .to(
+      CLOAK,
+      {
+        duration: DURATIONS.EYES,
+        onComplete: () => {
+          set(PAC, { right: 10, scale: 0 })
+          set(INPUT, { attr: { type: 'password' } })
+        },
+        left: -5,
+        ease: 'none',
+      },
+      0
+    )
+    .to(CLOAK, DURATIONS.ENV, {
+      duration: DURATIONS.ENV,
+      opacity: 0,
+      onComplete: () => {
+        set(CLOAK, { left: '100%', opacity: 1 })
+      },
+    })
+    .to(
+      PAC,
+      {
+        duration: DURATIONS.ENV,
+        scale: 1,
+      },
+      DURATIONS.EYES
+    )
+}
+
+const showPassword = () => {
+  timeline({
+    onStart: () => AUDIO.CLICK.play(),
+    onComplete: () => {
+      AUDIO.IN.pause()
+      AUDIO.IN.currentTime = 0
+    },
+  })
+    .to(INPUT, {
+      duration: DURATIONS.ENV,
+      onStart: () => {
+        set(GHOST, {
+          backgroundColor: `var(--ghost--${
+            COLORS.GHOST[Math.floor(Math.random() * COLORS.GHOST.length)]
+          })`,
+        })
+      },
+      letterSpacing: 15,
+      backgroundColor: COLORS.BG,
+      color: 'hsl(0, 0, 98%)',
+    })
+    .to(
+      CLOAK,
+      {
+        duration: DURATIONS.ENV,
+        backgroundColor: COLORS.BG,
+      },
+      0
+    )
+    .to(PAC, DURATIONS.CHOMP, {
+      duration: DURATIONS.CHOMP,
+      right: '105%',
+      ease: 'none',
+      onStart: () => {
+        AUDIO.IN.play()
+        PAC.classList.add('pac-input__pac--chomping')
+      },
+      onComplete: () => {
+        PAC.classList.remove('pac-input__pac--chomping')
+        set(INPUT, { attr: { type: 'text' } })
+      },
+    })
+    .to(
+      CLOAK,
+      {
+        duration: DURATIONS.CHOMP,
+        left: -5,
+        ease: 'none',
+      },
+      '<'
+    )
+    .to(GHOST, {
+      duration: DURATIONS.GHOST,
+      right: 10,
+      ease: 'none',
+    })
+
+    .to(
+      CLOAK,
+      {
+        duration: DURATIONS.GHOST,
+        left: '100%',
+        ease: 'none',
+      },
+      '<'
+    )
+    .to(INPUT, {
+      duration: DURATIONS.ENV,
+      letterSpacing: 1,
+      backgroundColor: COLORS.INPUT,
+      color: 'black',
+    })
+    .to(
+      CLOAK,
+      {
+        duration: DURATIONS.ENV,
+        backgroundColor: COLORS.INPUT,
+      },
+      '<'
+    )
+}
+
+PAC.addEventListener('click', showPassword)
+GHOST.addEventListener('click', hidePassword)
+
+
+
+
+js babel
