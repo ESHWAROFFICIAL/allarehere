@@ -1,0 +1,104 @@
+
+<h1 onclick="copy()">Welcome to Season Page</h1>
+   <h3>Click on the Button to view different Seasons</h3>
+
+<p id="demo"></p>
+<div class="div">
+
+<button type="button" onclick="summer()" class="button">Summer Theme</button>
+<button type="button" onclick="winter()" class="button">Winter Theme</button>
+<button type="button" onclick="autumn()" class="button">Autumn Theme</button>
+<button type="button" onclick="spring()" class="button">Spring Theme</button>
+</div>
+
+<hr>
+<p onclick="copy()">Designed By ProGrad Jr , Eshwar Anand </p>
+
+
+
+
+html
+
+
+
+body{
+  background:lavender;
+  font-family:Oswald;
+}
+h1,h3,p{
+  text-align:center;
+}
+div{
+  display:flex;
+  justify-content:space-evenly; 
+  padding:30px;
+  margin-top:300px;
+}
+.button {
+  display:flex;
+  justify-content:center;
+  margin:10px;
+  text-align: center; 
+  padding:10px;
+  background:grey;
+  border:2px solid black;
+  color:white;
+}
+hr{
+  width:80%;
+}
+
+
+
+css
+
+
+
+
+
+
+
+  document.getElementById("demo").innerHTML = Date();
+
+
+function copy(){
+  alert("LOL ! You can't Copy");
+  }
+
+function summer()
+{  
+ 
+document.body.style.backgroundImage = "url('https://res.cloudinary.com/pavie/image/upload/v1595005653/summer_jt8yiy.png')";
+ document.body.style.backgroundRepeat = "no-repeat";
+ document.body.style.backgroundSize = "100%"; 
+  alert("Hey ! It's Summer");
+}
+
+function winter()
+{
+ document.body.style.backgroundImage ="url('https://res.cloudinary.com/pavie/image/upload/v1595005659/winter_kxcbyk.png')";
+document.body.style.backgroundRepeat = "no-repeat";
+document.body.style.backgroundSize = "100%"; 
+  alert("Hey ! It's Winter");
+}
+function autumn()
+{
+ document.body.style.backgroundImage ="url('https://res.cloudinary.com/pavie/image/upload/v1595005628/autumn_ywwom5.png')";
+document.body.style.backgroundRepeat = "no-repeat";
+document.body.style.backgroundSize = "100%";
+  alert("Hey ! It's Autumn");
+ 
+}
+function spring()
+{
+ document.body.style.backgroundImage ="url('https://res.cloudinary.com/pavie/image/upload/v1595005642/spring_qejh9v.png')";
+ document.body.style.backgroundRepeat = "no-repeat";
+ document.body.style.backgroundSize = "100%"; 
+  alert("Hey ! It's Spring");
+}
+
+
+
+
+
+js
