@@ -1,0 +1,71 @@
+<h2>Hey There ! Check out mouse </h2>
+<h3>Swap the mouse To "Left-Top-Bottom-Right"
+  <div id="square">
+    <h1 class="text"></h1>
+  </div>
+  <h3>Directions: Just move the curson over the rectangle area </h3>
+  
+  
+  html
+  
+  
+  
+  
+  
+  
+  
+  body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url("https://avante.biz/wp-content/uploads/Background-Pics-HD/Background-Pics-HD-001.jpg");
+  background-size: cover;
+}
+#square {
+  height: 250px;
+  width: 500px;
+  margin: 100px auto;
+  background: linear-gradient(to bottom left, #006666 0%, #990000 93%);
+  position: relative;
+  border-radius: 35px;
+  color: grey;
+}
+.text {
+  text-align: center;
+  padding-top: 100px;
+}
+h2,
+h3,
+h4 {
+  text-align: center;
+  color: brown;
+  font-weight: 400px;
+  margin: 30px;
+}
+h3 {
+  font-size: 30px;
+  color: lightblue;
+}
+
+
+
+
+css
+
+
+
+
+
+var square = document.getElementById("square");
+
+x = 0;
+
+square.addEventListener("mouseover", function () {
+  x += 1;
+  document.querySelector(".text").innerHTML = x;
+});
+
+
+
+
+js
